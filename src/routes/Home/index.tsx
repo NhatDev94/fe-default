@@ -1,5 +1,6 @@
 import { useQuery } from "react-query"
 import feedApi from "../../apis/feedApi"
+import { PostBegin } from "../../features";
 
 const Home = () => {
   const { data, isLoading } = useQuery({
@@ -14,7 +15,11 @@ const Home = () => {
 
 
   return (
-    <div>
+    <div className=" px-32 pt-6 bg-second">
+      <div className="mb-10">
+        <PostBegin />
+      </div>
+
       {
         data && data?.map((post: any, index: number) => (
           <div className="border border-black/20 mb-8 p-2" key={index}>
