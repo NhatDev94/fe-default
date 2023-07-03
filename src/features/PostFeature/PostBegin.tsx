@@ -1,12 +1,13 @@
 import { AvatarComponent } from "../../components"
 import { useModal } from "../../hooks"
+import CreateAndEditPost from "./CreateAndEditPost"
 
 const PostBegin = () => {
 
     const url = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-aBDBxegoNFLLcyAuqXtCKFOdtjJ7p_3m0g&usqp=CAU'
 
     const { handleOpen, modal } = useModal({
-        modalContent: <></>,
+        modalContent: <CreateAndEditPost />,
         title: 'Tao bai viet'
     })
 
