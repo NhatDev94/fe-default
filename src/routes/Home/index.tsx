@@ -2,16 +2,16 @@ import { useQuery } from "react-query"
 import feedApi from "../../apis/feedApi"
 
 const Home = () => {
-  const {data, isLoading} = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: 'feed',
     queryFn: feedApi.getFeed,
     cacheTime: 1 * 10 * 1000,
     staleTime: 1 * 10 * 1000
   })
-  
+
   console.log('loading', isLoading);
   console.log('data', data);
-  
+
 
   return (
     <div>
