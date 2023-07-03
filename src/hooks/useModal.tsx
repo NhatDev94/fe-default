@@ -22,7 +22,7 @@ const useModal = (props: PropsInterface) => {
         open,
         handleOpen,
         handleClose,
-        modal: () => <ModalComponent handleClose={handleClose} title={title}>{modalContent}</ModalComponent>
+        modal: () =>  open && <ModalComponent handleClose={handleClose} title={title}>{modalContent}</ModalComponent>
     }
 }
 
