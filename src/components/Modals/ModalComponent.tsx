@@ -16,7 +16,7 @@ const ModalComponent = (props: PropsInterface) => {
                 <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-white rounded-md py-2 px-4 w-2/5 min-w-[240px] min-h-[20%]'>
                     <div className={`w-full flex items-center justify-between min-h-14 mb-2 ${title ? 'mb-4' : ''}`}>
                         <h4 className='text-sm font-semibold text-black'>{title || ''}</h4>
-                        <div className='w-fit h-fit' onClick={handleClose}>{''}</div>
+                        <div className='w-fit h-fit cursor-pointer' onClick={handleClose}>{'x'}</div>
                     </div>
                     {children}
                 </div>
