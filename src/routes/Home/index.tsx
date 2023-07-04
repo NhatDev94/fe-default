@@ -1,6 +1,6 @@
 import { useQuery } from "react-query"
 import feedApi from "../../apis/feedApi"
-import { PostBegin } from "../../features";
+import { PostBegin, PostCard } from "../../features";
 
 const Home = () => {
   const { data, isLoading } = useQuery({
@@ -15,9 +15,13 @@ const Home = () => {
 
 
   return (
-    <div className=" px-32 pt-6 bg-second">
-      <div className="mb-10">
+    <div className=" px-32 py-6 bg-second">
+      <div className="mb-4">
         <PostBegin />
+      </div>
+
+      <div className="">
+        <PostCard />
       </div>
 
       {

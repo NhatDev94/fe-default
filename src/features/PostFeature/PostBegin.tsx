@@ -14,7 +14,7 @@ const PostBegin = () => {
     return (
         <div className="w-full h-fit p-4 rounded-lg shadow-sm border border-black/5 bg-white">
             <div className="flex items-center justify-center w-full pb-4 border-b border-black/10">
-                <AvatarComponent url={url} className='mr-2' />
+                <AvatarComponent url={url} className='mr-2 cursor-pointer' />
                 <input
                     className="bg-second outline-none border-none w-full py-2 px-4 rounded-[20px]"
                     placeholder="Nhat oi, ban dang nghi gi the?"

@@ -1,5 +1,5 @@
 const feedApi = {
-    endpoint: 'https://jsonplaceholder.typicode.com/posts',
+    endpoint: 'https://6403f79280d9c5c7babe5f25.mockapi.io/feed',
     getFeed: async () => {
         try {
             const res = await fetch(feedApi.endpoint)

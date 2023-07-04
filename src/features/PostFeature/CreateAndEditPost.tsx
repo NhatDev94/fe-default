@@ -1,11 +1,16 @@
 import { AvatarComponent, ButtonComponent } from "../../components"
 
-const CreateAndEditPost = () => {
+interface PropsInterface {
+  type?: string
+}
+
+const CreateAndEditPost = (props: PropsInterface) => {
+  const { type = 'create' } = props
 
   const url = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-aBDBxegoNFLLcyAuqXtCKFOdtjJ7p_3m0g&usqp=CAU'
 
   return (
-    <div className="mb-2">
+    <div className="mb-2 border-t border-black/10 pt-4">
       <div className="flex items-center justify-between">
         <AvatarComponent url={url} className="mr-2" />
         <div className="w-full mb-4">
@@ -29,7 +34,7 @@ const CreateAndEditPost = () => {
       <ButtonComponent
         moreClass="bg-primary text-white mt-2"
       >
-        Dang
+        {type === 'create' ? 'Dang' : 'Luu'}
       </ButtonComponent>
     </div>
   )
