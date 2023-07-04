@@ -18,7 +18,7 @@ const ModalComponent = (props: PropsInterface) => {
                 <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-white rounded-md py-2 px-4 w-2/5 min-w-[240px] min-h-[20%]'>
                     <div className={`w-full flex items-center justify-between min-h-14 mb-2 ${title ? 'mb-4' : ''}`}>
                         <h4 className={`w-full text-sm font-semibold text-black ${isTitleCenter ? 'text-center' : ''}`} >{title || ''}</h4>
-                        <div className='w-fit h-fit cursor-pointer' onClick={handleClose}>{faXmarkIcon}</div>
+                        <div className='w-8 h-8 rounded-full flex items-center justify-center bg-second hover:bg-hover cursor-pointer' onClick={handleClose}>{faXmarkIcon}</div>
                     </div>
                     {children}
                 </div>
