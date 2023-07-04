@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { ChangeEventHandler, useEffect, useRef, useState } from 'react'
 import { FormInstance, Upload, message } from 'antd'
 import { ColumnsItemInterface } from '../../interfaces'
 
@@ -12,16 +12,18 @@ interface UploadPropsInterface {
     col: ColumnsItemInterface,
     form: FormInstance,
     initialValues?: InitValueInterface,
+    multiple?: boolean
+    handleUpload?: any,
 }
 
-const MAX_SIZE = 2
-const MAX_COUNT = 5
+const MAX_SIZE = 1000
+const MAX_COUNT = 1000
 
 const UploadComponent = (props: UploadPropsInterface) => {
     const limitSize: any = useRef()
     const limitCount: any = useRef()
 
-    const { col, form, initialValues } = props
+    const { col, form, initialValues, handleUpload, multiple = false } = props
     const [files, setFiles] = useState<any[]>([])
 
     useEffect(() => {
@@ -52,7 +54,7 @@ const UploadComponent = (props: UploadPropsInterface) => {
     const handleChange = async (value: any) => {
         clearTimeout(limitSize?.current)
         clearTimeout(limitCount?.current)
-        const {file, fileList} = value
+        const { file, fileList } = value
         const allowCount = validateCount(fileList?.length)
         if (!allowCount) {
             limitCount.current = setTimeout(() => {
@@ -60,35 +62,73 @@ const UploadComponent = (props: UploadPropsInterface) => {
             }, 100)
             return
         }
-        const allowSize = validateSize(file?.size)
-        if (!allowSize) {
-            limitSize.current = setTimeout(() => {
-                message.error('File khong duoc phep vuot qua ' + MAX_SIZE + 'MB')
-            }, 100)
-            return
-        }
-        if (file?.url) return
-        const reader = new FileReader()
-        reader.onload = (e: ProgressEvent<FileReader>) => {
-            file.url = e.target?.result
-        }
-        reader.readAsDataURL(file)
-        setFiles([...files, file])
+        let datas = files || []
+        fileList?.forEach((file: any) => {
+            const allowSize = validateSize(file?.size)
+            if (!allowSize) {
+                limitSize.current = setTimeout(() => {
+                    message.error('File khong duoc phep vuot qua ' + MAX_SIZE + 'MB')
+                }, 100)
+                return
+            }
+            if (file?.url) return
 
-        setTimeout(() => {
-            // phai bo code vao settimeout moi lay dc url
-            const newFiles = [...files, file]?.map((item: any) => {
-                return {
-                    uid: item?.uid,
-                    name: item?.name?.replaceAll(' ', ''),
-                    url: item?.url,
-                    size: item?.size,
-                    lastModified: item?.lastModified,
-                    type: item?.type
-                }
-            })
-            form.setFieldsValue({ [col?.name]: newFiles })
-        }, 50)
+            const reader = new FileReader()
+            reader.onload = (e: ProgressEvent<FileReader>) => {
+                file.url = e.target?.result
+            }
+            reader.readAsDataURL(file?.originFileObj)
+            
+            datas = [...datas, file]
+            setFiles(datas)
+
+            setTimeout(() => {
+                // phai bo code vao settimeout moi lay dc url
+                const newFiles = datas?.map((item: any) => {
+                    return {
+                        uid: item?.uid,
+                        name: item?.name?.replaceAll(' ', ''),
+                        url: item?.url,
+                        size: item?.size,
+                        lastModified: item?.lastModified,
+                        type: item?.type
+                    }
+                })
+                form.setFieldsValue({ [col?.name]: newFiles })
+                handleUpload && handleUpload(newFiles)
+            }, 50)
+        })
+        
+        // const allowSize = validateSize(file?.size)
+        // if (!allowSize) {
+        //     limitSize.current = setTimeout(() => {
+        //         message.error('File khong duoc phep vuot qua ' + MAX_SIZE + 'MB')
+        //     }, 100)
+        //     return
+        // }
+        // if (file?.url) return
+        // const reader = new FileReader()
+        // reader.onload = (e: ProgressEvent<FileReader>) => {
+        //     file.url = e.target?.result
+        // }
+        // reader.readAsDataURL(file)
+        // setFiles([...files, file])
+        // handleUpload && handleUpload([...files, file])
+
+        // setTimeout(() => {
+        //     // phai bo code vao settimeout moi lay dc url
+        //     const newFiles = [...files, file]?.map((item: any) => {
+        //         return {
+        //             uid: item?.uid,
+        //             name: item?.name?.replaceAll(' ', ''),
+        //             url: item?.url,
+        //             size: item?.size,
+        //             lastModified: item?.lastModified,
+        //             type: item?.type
+        //         }
+        //     })
+        //     form.setFieldsValue({ [col?.name]: newFiles })
+        // }, 50)
     }
 
     const handleRemove = (value: any) => {
@@ -108,7 +148,7 @@ const UploadComponent = (props: UploadPropsInterface) => {
             name={col?.name}
             fileList={files}
             listType='picture'
-            multiple={true}
+            multiple={multiple}
             onChange={handleChange}
             onRemove={handleRemove}
         >

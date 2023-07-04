@@ -19,14 +19,22 @@ const FormComponent = (props: FormPropsInterface) => {
   const renderInput = (col: ColumnsItemInterface) => {
     switch (col?.formItem?.type) {
       case 'upload':
-        return <UploadComponent col={col} form={form} initialValues={values[col?.name]} />
+        return (
+          <UploadComponent
+            col={col}
+            form={form}
+            initialValues={values[col?.name]}
+            multiple={col?.formItem?.multiple}
+            handleUpload={col?.formItem?.handleUpload}
+          />
+        )
       default:
         return <Input placeholder={`Please enter ${col?.title?.toLowerCase()}...`} />
     }
   }
 
   return (
-    <div className='py-4'>
+    <div className=''>
       <Form
         initialValues={values}
         form={form}
