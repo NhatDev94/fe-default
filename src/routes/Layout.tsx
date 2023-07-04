@@ -14,7 +14,7 @@ const Layout = (props: propsInterface) => {
             </div>
 
             {/* Main */}
-            <div className="w-full relative z-40">
+            <div className="w-full relative">
                 <div className="fixed top-0 left-0 z-40">
                     <SideLeftComponent />
                 </div>
