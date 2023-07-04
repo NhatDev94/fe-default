@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEllipsis, faXmark, faEarthAmericas, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
+import { faEllipsis, faXmark, faEarthAmericas, faThumbsUp, faImages, faLock } from '@fortawesome/free-solid-svg-icons'
 import {faMessage, faShareFromSquare, faThumbsUp as faThumbsUpRe} from '@fortawesome/free-regular-svg-icons'
 
 const getIcon = (icon: any, color?: string) => {
@@ -13,7 +13,8 @@ const faThumbsUpIcon = getIcon(faThumbsUpRe)
 const faThumbsUpBlueIcon = getIcon(faThumbsUp, 'blue')
 const faMessageIcon = getIcon(faMessage)
 const faShareIcon = getIcon(faShareFromSquare)
-
+const faImagesIcon = getIcon(faImages)
+const faLockIcon = getIcon(faLock)
 
 export {
     faEllipsisIcon,
@@ -23,4 +24,6 @@ export {
     faThumbsUpBlueIcon,
     faMessageIcon,
     faShareIcon,
+    faImagesIcon,
+    faLockIcon
 }

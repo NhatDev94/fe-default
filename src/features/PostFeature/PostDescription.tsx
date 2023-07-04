@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 interface PropsInterface {
-    description: string
+    description: string | undefined
 }
 
 const PostDescription = (props: PropsInterface) => {

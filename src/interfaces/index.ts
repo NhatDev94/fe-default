@@ -3,11 +3,24 @@ interface RuleInterface {
     message?: string
 }
 
+export interface ImageInterface {
+    url?: string
+}
+
 export interface ColumnsItemInterface {
     title?: string,
     name: string,
     formItem?: {
         type?: string,
-        rules?: RuleInterface[]
+        rules?: RuleInterface[],
+        handleUpload?: any,
+        multiple?: boolean
     }
+}
+
+
+
+export interface PostInterFace {
+    description?: string,
+    images?: ImageInterface[]
 }

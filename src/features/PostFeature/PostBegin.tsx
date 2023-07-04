@@ -1,13 +1,34 @@
+import { faImagesIcon } from "../../assets/icons"
 import { AvatarComponent } from "../../components"
 import { useModal } from "../../hooks"
+import useCreateAndEditPost from "../../hooks/useCreateAndEditPost"
 import CreateAndEditPost from "./CreateAndEditPost"
 
 const PostBegin = () => {
 
     const url = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-aBDBxegoNFLLcyAuqXtCKFOdtjJ7p_3m0g&usqp=CAU'
 
-    const { handleOpen, modal } = useModal({
-        modalContent: <CreateAndEditPost />,
+    const createPostSuccess = () => {
+        onChangeDescription && onChangeDescription('')
+        setImages([])
+        handleClose && handleClose()
+    }
+
+    const { isLoading, description, images, setImages, onChangeDescription, handleCreate } = useCreateAndEditPost({
+        createPostSuccess
+    })
+
+    const { handleOpen, handleClose, modal } = useModal({
+        isLoading: isLoading,
+        modalContent: (
+            <CreateAndEditPost
+                description={description}
+                images={images}
+                setImages={setImages}
+                onChangeDescription={onChangeDescription}
+                handleCreate={handleCreate}
+            />
+        ),
         title: 'Tao bai viet'
     })
 
@@ -25,7 +46,7 @@ const PostBegin = () => {
                 <p
                     className="text-xs font-semibold py-1.5 px-2 cursor-pointer hover:bg-hover rounded-md"
                     onClick={handleOpen}
-                >Anh/video</p>
+                >{faImagesIcon} Anh/video</p>
             </div>
 
             {modal()}
