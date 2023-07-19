@@ -1,7 +1,10 @@
 import { useEffect } from 'react'
 import { Form, FormInstance, Input } from 'antd'
 import UploadComponent from '../UploadComponent'
-import { ColumnsItemInterface } from '../../interfaces'
+import { ColumnsItemInterface } from '../../interfaces/ColumnInterface'
+import { CustomSelect } from '..'
+
+import './index.css'
 
 interface FormPropsInterface {
   values?: any,
@@ -17,7 +20,15 @@ const FormComponent = (props: FormPropsInterface) => {
   }, [values, form])
 
   const renderInput = (col: ColumnsItemInterface) => {
+    const placeholder = col?.formItem?.placeholder || `Please enter ${col?.title?.toLowerCase()}...`
     switch (col?.formItem?.type) {
+      case 'custom-select':
+        return (
+          <CustomSelect
+            placeholder={placeholder}
+            optionList={col?.formItem?.optionList || []}
+          />
+        )
       case 'upload':
         return (
           <UploadComponent
@@ -29,7 +40,7 @@ const FormComponent = (props: FormPropsInterface) => {
           />
         )
       default:
-        return <Input placeholder={`Please enter ${col?.title?.toLowerCase()}...`} />
+        return <Input placeholder={placeholder} />
     }
   }
 
@@ -39,23 +50,26 @@ const FormComponent = (props: FormPropsInterface) => {
         initialValues={values}
         form={form}
       >
-        {
-          columns?.map((col: ColumnsItemInterface, index: number) => {
-            return (
-              <div className='' key={index}>
-                <h4 className='w-full capitalize font-semibold'>
-                  {col?.title}
-                </h4>
-                <Form.Item
-                  name={col?.name}
-                  rules={col?.formItem?.rules}
-                >
-                  {renderInput(col)}
-                </Form.Item>
-              </div>
-            )
-          })
-        }
+        <div className='w-full grid grid-cols-8 gap-x-2'>
+          {
+            columns?.map((col: ColumnsItemInterface, index: number) => {
+              const colSpan = 'col-span-' + col?.formItem?.col || 8
+              return (
+                <div className={`${colSpan}`} key={index}>
+                  <h4 className='w-full capitalize font-semibold text-xs mb-2'>
+                    {col?.title}
+                  </h4>
+                  <Form.Item
+                    name={col?.name}
+                    rules={col?.formItem?.rules}
+                  >
+                    {renderInput(col)}
+                  </Form.Item>
+                </div>
+              )
+            })
+          }
+        </div>
       </Form>
     </div>
   )

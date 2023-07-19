@@ -1,0 +1,10 @@
+.ant-input {
+    padding: 8px 12px !important;
+    border: 1px solid rgba(0, 0, 0, 0.3) !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.ant-input::placeholder {
+    color: rgba(0, 0, 0, 0.5)
+}

@@ -1,6 +1,6 @@
 import { ChangeEventHandler, useEffect, useRef, useState } from 'react'
 import { FormInstance, Upload, message } from 'antd'
-import { ColumnsItemInterface } from '../../interfaces'
+import { ColumnsItemInterface } from '../../interfaces/ColumnInterface'
 
 interface InitValueInterface {
     uid?: number | string,
