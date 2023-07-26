@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
-import { Form, FormInstance, Input } from 'antd'
+import { Form, FormInstance } from 'antd'
 import UploadComponent from '../UploadComponent'
 import { ColumnsItemInterface } from '../../interfaces'
+import Input from './Input'
+import { DatePicker } from '..'
 
 interface FormPropsInterface {
   values?: any,
@@ -28,6 +30,8 @@ const FormComponent = (props: FormPropsInterface) => {
             handleUpload={col?.formItem?.handleUpload}
           />
         )
+      case 'date':
+        return <DatePicker />
       default:
         return <Input placeholder={`Please enter ${col?.title?.toLowerCase()}...`} />
     }

@@ -2,22 +2,22 @@ import { Routes, Route } from 'react-router-dom'
 import Layout from './Layout'
 import { lazy, ReactNode, Suspense } from 'react'
 
-const Home = lazy(() => import('./Home'))
-const Profile = lazy(() => import('./Profile'))
 const Auth = lazy(() => import(('./Auth')))
+const Spending = lazy(() => import('./Spending'))
+const Statistical = lazy(() => import('./Statistical'))
 
 const pages = [
     {
-        path: '/auth',
+        path: '/account',
         element: <Auth />
     },
     {
         path: '/',
-        element: <Home />
+        element: <Spending />
     },
     {
-        path: '/profile',
-        element: <Profile />
+        path: 'statistical',
+        element: <Statistical />
     }
 ]
 

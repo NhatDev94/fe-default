@@ -14,7 +14,7 @@ const ButtonComponent = (props: ButtonPropsInterface) => {
     <div className='button-component'>
       <Button
         disabled={disabled}
-        className={`w-full h-8 outline-none border border-black/10 rounded-md ${moreClass}`}
+        className={`w-full h-10 outline-none border border-black/10 bg-slate-950 !text-white rounded-md ${moreClass}`}
         onClick={onClick}
       >
         {children}
