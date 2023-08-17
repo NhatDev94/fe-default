@@ -1,20 +1,47 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { angleLeft, angleRight, faPlus } from "../../assets/icons"
 import ModalAddSpending from "../../components/Modals/ModalAddSpending"
 import { useModal } from "../../hooks"
 import SpendingDaily from "./SpendingDaily"
+import { Form, message } from 'antd'
+import spendingApi from '../../apis/spendingApi'
+import { SpendingInterface } from '../../interfaces/spending'
 
 const Spending = () => {
+  const [form] = Form.useForm()
+
   const [isLoading, setIsLoading] = useState(false)
+  const [spendings, setSpendings] = useState<SpendingInterface[]>([])
 
-  const spendings = [
-    1, 2, 3, 4, 65, 5, 12,12312313,123121212,1232435
-  ]
+  const getSpending = useCallback(async () => {
+    setIsLoading(true)
+    const data = await spendingApi.getAllSpending()
+    setIsLoading(false)
+    console.log(data);
+    setSpendings(data?.data)
+  }, [])
 
-  const { handleOpen, modal: modalAddSpending } = useModal({
+  useEffect(() => {
+    getSpending()
+  }, [getSpending])
+
+  const handleCreateSpending = async () => {
+    const values = await form.validateFields()
+    setIsLoading(true)
+    const data = await spendingApi.createSpending(values)
+    setIsLoading(false)
+    if (data) {
+      form.resetFields()
+    } else {
+      message.error('Them khong thanh cong')
+    }
+    handleClose && handleClose()
+  }
+
+  const { handleOpen, modal: modalAddSpending, handleClose } = useModal({
     title: 'Add Spending',
     isLoading: isLoading,
-    modalContent: <ModalAddSpending />,
+    modalContent: <ModalAddSpending setIsLoading={setIsLoading} submit={handleCreateSpending} form={form} />,
   })
 
   const handleBack = () => {
@@ -50,8 +77,8 @@ const Spending = () => {
 
       <div className="pb-20 pt-24">
         {
-          spendings?.map((i: number) => {
-            return <SpendingDaily key={i} />
+          [1]?.map((i: number) => {
+            return <SpendingDaily key={i} spendings={spendings} />
           })
         }
       </div>

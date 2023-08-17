@@ -1,7 +1,39 @@
+import { useState } from 'react'
+import { ModalAddSpending } from "../../components"
+import { useModal } from "../../hooks"
+import { SpendingInterface } from "../../interfaces/spending"
 import SpendingItem from "./SpendingItem"
+import { Form } from 'antd'
+import spendingApi from '../../apis/spendingApi'
 
-const SpendingDaily = () => {
-  const spendingInDays = [1, 2, 3]
+interface PropsInterface {
+  spendings: SpendingInterface[]
+}
+
+const SpendingDaily = (props: PropsInterface) => {
+  const { spendings = [] } = props
+  const [form] = Form.useForm()
+  const [isLoading, setIsLoading] = useState(false)
+  const [id, setId] = useState<number>(0)
+
+  const handleSubmit = async () => {
+    const values = await form.validateFields()
+    const data = await spendingApi.update(id, values)
+    console.log(data);
+    
+  }
+
+  const handleFillFormUpdateSpending = (values: SpendingInterface) => {
+    setId(values?.id)
+    form.setFieldsValue(values)
+    handleOpen && handleOpen()
+  }
+
+  const { handleOpen, modal: modalEditSpending } = useModal({
+    isLoading: isLoading,
+    title: 'Update Spending',
+    modalContent: <ModalAddSpending setIsLoading={setIsLoading} form={form} submit={handleSubmit} textSubmit='Update' />
+  })
 
   return (
     <div className="bg-slate-200 pt-1">
@@ -19,10 +51,11 @@ const SpendingDaily = () => {
 
         <div className="">
           {
-            spendingInDays?.map((i: number) => <SpendingItem key={i} />)
+            spendings?.map((speding: SpendingInterface, i: number) => <SpendingItem key={i} spending={speding} handleOpen={handleFillFormUpdateSpending} />)
           }
         </div>
       </div>
+      {modalEditSpending()}
     </div>
   )
 }

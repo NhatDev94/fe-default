@@ -6,7 +6,8 @@ interface PropsInterface {
     handleClose: MouseEventHandler,
     title?: string | undefined,
     isTitleCenter?: boolean,
-    isLoading: boolean
+    isLoading: boolean,
+    values?: object
 }
 
 const ModalComponent = (props: PropsInterface) => {

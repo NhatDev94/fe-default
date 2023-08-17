@@ -1,13 +1,15 @@
-import { Form } from "antd"
+import { FormInstance } from "antd"
 import { ButtonComponent, FormComponent } from ".."
 
 interface PropsInterface {
-    setIsLoading?: () => void
+    setIsLoading?: (value: boolean) => void,
+    submit?: () => void,
+    form: FormInstance,
+    textSubmit?: string,
 }
 
 const ModalAddSpending = (props: PropsInterface) => {
-    const { setIsLoading } = props
-    const [form] = Form.useForm()
+    const { submit, form, textSubmit = 'Submit' } = props
 
     const cols = [
         {
@@ -20,36 +22,42 @@ const ModalAddSpending = (props: PropsInterface) => {
         {
             title: 'Account',
             name: 'account',
-            formItem: {}
+            formItem: {
+                rules: [{ required: true }]
+            }
         },
         {
             title: 'Category',
             name: 'category',
-            formItem: {}
+            formItem: {
+                rules: [{ required: true }]
+            }
         },
         {
             title: 'Amount',
             name: 'amount',
-            formItem: {}
+            formItem: {
+                rules: [{ required: true }]
+            }
         },
         {
             title: 'Note',
             name: 'note',
-            formItem: {}
+            formItem: {
+                rules: [{ required: true }]
+            }
         }
     ]
 
     const handleSubmit = async () => {
-        const value = await form.validateFields()
-        console.log(value);
-        
+        submit && submit()
     }
 
     return (
         <div className="">
-            <FormComponent values={{ date: new Date() }} columns={cols} form={form} />
+            <FormComponent columns={cols} form={form} />
 
-            <ButtonComponent moreClass="mt-5" onClick={handleSubmit}>Submit</ButtonComponent>
+            <ButtonComponent moreClass="mt-5" onClick={handleSubmit}>{textSubmit}</ButtonComponent>
         </div>
     )
 }
