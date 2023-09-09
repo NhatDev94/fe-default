@@ -2,9 +2,8 @@ import { Routes, Route } from 'react-router-dom'
 import Layout from './Layout'
 import { lazy, ReactNode, Suspense } from 'react'
 
-const Home = lazy(() => import('./Home'))
-const Profile = lazy(() => import('./Profile'))
 const Auth = lazy(() => import(('./Auth')))
+const Portfolio = lazy(() => import(('./Portfolio')))
 
 const pages = [
     {
@@ -13,12 +12,8 @@ const pages = [
     },
     {
         path: '/',
-        element: <Home />
+        element: <Portfolio />
     },
-    {
-        path: '/profile',
-        element: <Profile />
-    }
 ]
 
 const renderLoading = (element: ReactNode) => {
