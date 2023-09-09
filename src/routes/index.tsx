@@ -3,8 +3,7 @@ import Layout from './Layout'
 import { lazy, ReactNode, Suspense } from 'react'
 
 const Home = lazy(() => import('./Home'))
-const Profile = lazy(() => import('./Profile'))
-const Auth = lazy(() => import(('./Auth')))
+const Auth = lazy(() => import('./Auth'))
 
 const pages = [
     {
@@ -14,10 +13,6 @@ const pages = [
     {
         path: '/',
         element: <Home />
-    },
-    {
-        path: '/profile',
-        element: <Profile />
     }
 ]
 
